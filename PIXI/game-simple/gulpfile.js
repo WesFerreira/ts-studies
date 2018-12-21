@@ -36,6 +36,7 @@ gulp.task("build", function () {
         standalone: fileName
     });
 
+    // Process .ts to .js
     gulp.src([
         "source/**/**.ts",
         "source/typings/**.d.ts/",
@@ -45,11 +46,13 @@ gulp.task("build", function () {
         .on("error", swallowError)
         .js.pipe(gulp.dest("source/js/processed"));
 
+    // Bundle .ts in a main file .js
     bundler.add(mainJsFilePath)
         .bundle()
         .pipe(source(fileName + '.js'))
         .pipe(gulp.dest(TsBuiltOutputFolder));
 
+    // Bundle main .js with libs and uglify (bundle.js)
     return gulp.src(['source/lib/**/*.js', 'source/js/processed/tsBuilt.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('all.js'))
