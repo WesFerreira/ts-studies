@@ -5,6 +5,7 @@ var gulp = require("gulp"),
     rename = require('gulp-rename'),
     autoprefixer = require('gulp-autoprefixer'),
     browserify = require("browserify"),
+    concat = require('gulp-concat'),
     source = require("vinyl-source-stream"),
     buffer = require("vinyl-buffer"),
     tsc = require("gulp-typescript"),
@@ -25,38 +26,45 @@ function swallowError(error) {
 //                                   .JS                                       //
 /////////////////////////////////////////////////////////////////////////////////
 gulp.task("build", function () {
-    var libraryName = "main";
-    var mainTsFilePath = "assembled/js/main.js";
-    var outputFolder = "assembled/main/";
-    var outputFileName = libraryName + ".min.js";
+    var fileName = "tsBuilt";
+    var mainJsFilePath = "source/js/processed/main.js";
+    var TsBuiltOutputFolder = "source/js/processed";
+    var outputFileName = fileName + ".min.js";
 
     var bundler = browserify({
         debug: true,
-        standalone: libraryName
+        standalone: fileName
     });
 
     gulp.src([
-        "src/**/**.ts",
-        "src/typings/**.d.ts/",
-        "src/interfaces/interfaces.d.ts"
+        "source/**/**.ts",
+        "source/typings/**.d.ts/",
+        "source/interfaces/interfaces.d.ts"
     ])
         .pipe(tsProject())
         .on("error", swallowError)
-        .js.pipe(gulp.dest("assembled/js"));
+        .js.pipe(gulp.dest("source/js/processed"));
 
-    return bundler.add(mainTsFilePath)
+    bundler.add(mainJsFilePath)
         .bundle()
-        .pipe(source(outputFileName))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(source(fileName + '.js'))
+        .pipe(gulp.dest(TsBuiltOutputFolder));
+
+    return gulp.src(['source/lib/**/*.js', 'source/js/processed/tsBuilt.js'])
+        .pipe(sourcemaps.init())
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('all.min.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(outputFolder));
+        .pipe(gulp.dest('dist')
+        );
 });
-gulp.task("build:watch", function () {
-    gulp.watch(["./src/**/*.ts"], ["build"]);
 
-    gulp.watch("./assembled/main/main.min.js").on('change', function () {
+gulp.task("build:watch", function () {
+    gulp.watch(["./source/**/*.ts"], ["build"]);
+
+    gulp.watch(outputFileName).on('change', function () {
         notify({
             title: "JS Updates",
             message: "Oh Yeaaah! You're awesome man."
