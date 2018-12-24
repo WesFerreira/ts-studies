@@ -10,9 +10,10 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     tsc = require('gulp-typescript'),
     sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
+    notify = require('gulp-notify'),
+    eventStream = require('event-stream'),
+    uglify = require('gulp-uglify');
 
-    notify = require('gulp-notify');
 var tsProject = tsc.createProject('tsconfig.json');
 // TODO: Check if all dependencies are in use
 
@@ -25,55 +26,67 @@ function swallowError(error) {
 /////////////////////////////////////////////////////////////////////////////////
 //                                   .JS                                       //
 /////////////////////////////////////////////////////////////////////////////////
-gulp.task('build', function () {
-    var tsProcessedFileName = 'tsBundle';
-    var tsOutputFolder = 'source/js/processed/';
-    var mainJsFile = tsOutputFolder + 'main.js'; // Processed from main.ts
-    var bundleFileName = 'bundle';
-    var bundleOutputFolder = 'dist';
 
-    var bundler = browserify({
-        debug: true,
-        standalone: tsProcessedFileName
-    });
+var tsProcessedFileName = 'core';
+var tsOutputFolder = 'source/js/processed/';
+var mainJsFile = tsOutputFolder + 'main.js'; // Processed from main.ts
+var bundleFileName = 'bundle';
+var bundleOutputFolder = 'dist';
 
+var bundler = browserify({
+    debug: true,
+    standalone: tsProcessedFileName
+});
+
+function processTS() {
     // Process .ts to .js
-    gulp.src([
+    return gulp.src([
         'source/**/**.ts',
         'source/typings/**.d.ts/',
         'source/interfaces/interfaces.d.ts'
     ])
         .pipe(tsProject())
         .on('error', swallowError)
-        .js.pipe(gulp.dest(tsOutputFolder));
+        .js.pipe(gulp.dest(tsOutputFolder).on('end', function () {
+            bundler.add(mainJsFile)
+                .bundle()
+                .pipe(source(tsProcessedFileName + '.min.js'))
+                .pipe(buffer())
+                .pipe(sourcemaps.init({ loadMaps: true }))
+                .pipe(uglify())
+                .pipe(sourcemaps.write('./'))
+                .pipe(gulp.dest(tsOutputFolder));
+        }));
+}
 
-    // Bundle .ts in a main file .js
-    bundler.add(mainJsFile)
-        .bundle()
-        .pipe(source(tsProcessedFileName + '.js'))
-        .pipe(gulp.dest(tsOutputFolder));
 
+function bundleLibs() {
     // Bundle libs with main fle and uglify (bundle.js)
-    return gulp.src([
-        'source/lib/**/*.js',
+    gulp.src([
         'node_modules/box2dweb/box2d.js',
-        'node_modules/pixi.js/dist/pixi.js',
-        tsOutputFolder + tsProcessedFileName + '.js',
+        'node_modules/pixi.js/dist/pixi.js'
     ])
         .pipe(sourcemaps.init())
-        .pipe(concat(bundleFileName + '.js'))
-        .pipe(gulp.dest(bundleOutputFolder))
-        .pipe(rename(bundleFileName + '.min.js'))
+        .pipe(rename('libs.min.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(bundleOutputFolder)
         );
+}
+
+gulp.task('bundle:libs', function () {
+    bundleLibs();
+});
+
+gulp.task('build', function () {
+    processTS();
+    // bundleFinal();
 });
 
 gulp.task('build:watch', function () {
     gulp.watch(['./source/**/*.ts'], ['build']);
 
-    gulp.watch(outputFileName).on('change', function () {
+    gulp.watch("dist/bundle.min.js").on('change', function () {
         notify({
             title: 'JS Updates',
             message: 'Oh Yeaaah! You are awesome man.'
