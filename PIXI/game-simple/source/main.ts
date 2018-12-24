@@ -1,7 +1,7 @@
 /** Created by WesFerreira 22/12/18 */
 
 document.body.onload = function() {
-    let app = new PIXI.Application({width: 640, height: 360, backgroundColor: 0xfff});
+    let app = new PIXI.Application({width: 640, height: 360, backgroundColor: 0xffffff});
     document.body.appendChild(app.view);
 
     let circle = new PIXI.Graphics();
@@ -11,6 +11,4 @@ document.body.onload = function() {
     circle.y = 180;
 
     app.stage.addChild(circle);
-
-    console.log(pixi);
 };

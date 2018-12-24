@@ -5,13 +5,11 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     autoprefixer = require('gulp-autoprefixer'),
     browserify = require('browserify'),
-    concat = require('gulp-concat'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     tsc = require('gulp-typescript'),
     sourcemaps = require('gulp-sourcemaps'),
     notify = require('gulp-notify'),
-    eventStream = require('event-stream'),
     uglify = require('gulp-uglify');
 
 var tsProject = tsc.createProject('tsconfig.json');
@@ -26,67 +24,63 @@ function swallowError(error) {
 /////////////////////////////////////////////////////////////////////////////////
 //                                   .JS                                       //
 /////////////////////////////////////////////////////////////////////////////////
+var names = {
+    mainDistFile: 'core',
+    mainSourceFile: 'main'
+};
 
-var tsProcessedFileName = 'core';
-var tsOutputFolder = 'source/js/processed/';
-var mainJsFile = tsOutputFolder + 'main.js'; // Processed from main.ts
-var bundleFileName = 'bundle';
-var bundleOutputFolder = 'dist';
-
-var bundler = browserify({
-    debug: true,
-    standalone: tsProcessedFileName
-});
-
-function processTS() {
-    // Process .ts to .js
-    return gulp.src([
-        'source/**/**.ts',
-        'source/typings/**.d.ts/',
-        'source/interfaces/interfaces.d.ts'
-    ])
-        .pipe(tsProject())
-        .on('error', swallowError)
-        .js.pipe(gulp.dest(tsOutputFolder).on('end', function () {
-            bundler.add(mainJsFile)
-                .bundle()
-                .pipe(source(tsProcessedFileName + '.min.js'))
-                .pipe(buffer())
-                .pipe(sourcemaps.init({ loadMaps: true }))
-                .pipe(uglify())
-                .pipe(sourcemaps.write('./'))
-                .pipe(gulp.dest(tsOutputFolder));
-        }));
-}
-
-
-function bundleLibs() {
-    // Bundle libs with main fle and uglify (bundle.js)
-    gulp.src([
+var paths = {
+    scripts: {
+        sourceTS: [
+            'source/**/*.ts',
+            'source/typings/**.d.ts/',
+            'source/interfaces/interfaces.d.ts'
+        ],
+        sourceJS: './source/js/processed/',
+        dist: './dist/'
+    },
+    libs: [
         'node_modules/box2dweb/box2d.js',
         'node_modules/pixi.js/dist/pixi.js'
-    ])
+    ]
+};
+
+// Bundle all libs in a single file.
+gulp.task('bundle:libs', function () {
+    gulp.src(paths.libs)
         .pipe(sourcemaps.init())
         .pipe(rename('libs.min.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(bundleOutputFolder)
+        .pipe(gulp.dest(paths.scripts.dist)
         );
-}
-
-gulp.task('bundle:libs', function () {
-    bundleLibs();
 });
 
-gulp.task('build', function () {
-    processTS();
-    // bundleFinal();
+// Process .ts to .js and update the core
+gulp.task('bundle:core', function () {
+    var bundler = browserify({
+        debug: true,
+        standalone: names.mainDistFile
+    });
+    return gulp.src(paths.scripts.sourceTS)
+        .pipe(tsProject())
+        .on('error', swallowError)
+        .js.pipe(gulp.dest(paths.scripts.sourceJS).on('end', function () {
+            bundler.add(paths.scripts.sourceJS + names.mainSourceFile + '.js')
+                .bundle()
+                .pipe(source(names.mainDistFile + '.min.js'))
+                .pipe(buffer())
+                .pipe(sourcemaps.init({ loadMaps: true }))
+                .pipe(uglify())
+                .pipe(sourcemaps.write('./'))
+                .pipe(gulp.dest(paths.scripts.dist));
+        }));
 });
 
-gulp.task('build:watch', function () {
-    gulp.watch(['./source/**/*.ts'], ['build']);
+gulp.task('core:watch', function () {
+    gulp.watch(paths.scripts.sourceTS, ['bundle:core']);
 
-    gulp.watch("dist/bundle.min.js").on('change', function () {
+    gulp.watch("dist/core.min.js").on('change', function () {
         notify({
             title: 'JS Updates',
             message: 'Oh Yeaaah! You are awesome man.'
