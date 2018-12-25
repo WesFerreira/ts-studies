@@ -6,6 +6,7 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
+    concat = require('gulp-concat'),
     buffer = require('vinyl-buffer'),
     tsc = require('gulp-typescript'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -49,6 +50,8 @@ var paths = {
 gulp.task('bundle:libs', function () {
     gulp.src(paths.libs)
         .pipe(sourcemaps.init())
+        .pipe(concat('libs.js'))
+        .pipe(gulp.dest(paths.scripts.sourceJS))
         .pipe(rename('libs.min.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
