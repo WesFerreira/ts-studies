@@ -28,7 +28,8 @@ function init() {
     createCircleBody();
     setupDebugDraw();
     // Start the Box2D animation loop
-    animate();
+    world.DrawDebugData();
+    
 }
 
 function createFloor() {
@@ -86,6 +87,5 @@ var positionIterations = 3;
 function animate() {
     world.Step(timeStep, velocityIterations, positionIterations);
     world.ClearForces();
-    world.DrawDebugData();
     setTimeout(animate, timeStep);
 }

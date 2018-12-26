@@ -1,7 +1,7 @@
 /** Created by WesFerreira 22/12/18 */
 
 // Shorteners
-let b2Vec2 = Box2D.Common.Math.b2Vec2;
+/* let b2Vec2 = Box2D.Common.Math.b2Vec2;
 let b2BodyDef = Box2D.Dynamics.b2BodyDef;
 let b2Body = Box2D.Dynamics.b2Body;
 let b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
@@ -168,3 +168,4 @@ document.body.onload = function () {
     });
 
 };
+ */
