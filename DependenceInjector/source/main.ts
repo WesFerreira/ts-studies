@@ -1,7 +1,5 @@
-import "reflect-metadata";
-import { Service } from "./service";
-import DIContainer from "./di-container";
+import { Master } from "./master";
 
-let service: Service = DIContainer.resolve<Service>(Service);
+let app = new Master;
 
-console.log(service.getAllNames());
+console.log(app.getNames());

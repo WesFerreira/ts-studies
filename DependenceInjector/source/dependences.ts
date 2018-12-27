@@ -7,6 +7,10 @@ export class DependencyA {
     public getName(): string {
         return this.name;
     }
+
+    constructor() {
+        console.log("DependencyA");
+    }
 }
 
 @injectable()
@@ -15,6 +19,10 @@ export class DependencyB {
 
     public getName(): string {
         return this.name;
+    }
+
+    constructor() {
+        console.log("DependencyB");
     }
 }
 
