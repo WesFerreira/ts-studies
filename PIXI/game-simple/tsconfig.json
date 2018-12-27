@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "types": ["reflect-metadata", "box2d", "pixi.js"],
+    "lib": ["es6", "dom"],
     "sourceMap": true,
     "module": "commonjs",
     "moduleResolution": "node",

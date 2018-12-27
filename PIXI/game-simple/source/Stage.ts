@@ -5,5 +5,8 @@
 import {Container} from "./Container";
 
 export class Stage extends Container {
-
+constructor() {
+    super();
+    console.log("Stage");
+}
 }

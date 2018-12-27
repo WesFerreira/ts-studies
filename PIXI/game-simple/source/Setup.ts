@@ -2,15 +2,17 @@
  * Someone stop me.
  */
 
+import "reflect-metadata";
 import { App } from "./App";
 import { PixiDebugBox2D } from "./PixiDebugBox2D";
+import container, { Service } from "./DepInjection";
 
 export class Setup {
-    public mon: App;
-    public d: PixiDebugBox2D;
+    public service: Service;
 
-    constructor(mon, d) {
-        this.mon = mon;
-        this.d = d;
+    constructor() {
+        // this.service = container.resolve<Service>(Service);
+        console.log("Setup");
+
     }
 }

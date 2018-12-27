@@ -8,6 +8,8 @@ import { DisplayObject } from "./objects/DisplayObject";
 export class Graphics extends Container {
     constructor() {
         super();
+        console.log("Graphics");
+
     }
 
     public createCircle() {

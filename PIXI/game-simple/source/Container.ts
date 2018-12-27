@@ -15,4 +15,7 @@ export class Container {
         });
         PixiDebugBox2D.getInstance().drawAll();
     }
+    constructor() {
+        console.log("Container");
+    }
 }

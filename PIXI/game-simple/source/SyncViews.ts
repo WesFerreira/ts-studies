@@ -9,7 +9,7 @@ import { App } from "./App";
 export class SyncViews {
 
     public debugDraw: Box2D.Dynamics.b2DebugDraw;
-    public stage = new Stage();
+    // public stage = new Stage();
     public renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
     public debugView: HTMLCanvasElement;
 
@@ -31,6 +31,8 @@ export class SyncViews {
         }
 
         this.addPixiView(options);
+
+        console.log("Sync");
     }
 
     private addDebugView(options: RendererOptions): HTMLCanvasElement {

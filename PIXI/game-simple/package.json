@@ -19,6 +19,8 @@
     "@types/box2d": "0.0.33",
     "@types/pixi.js": "^4.8.5",
     "box2dweb": "^2.1.0-b",
-    "pixi.js": "^4.7.3"
+    "inversify": "^5.0.1",
+    "pixi.js": "^4.7.3",
+    "reflect-metadata": "^0.1.12"
   }
 }
