@@ -2,31 +2,47 @@
  * @Author: WesFerreira - https://github.com/WesFerreira
  * @Date: 2018-12-28 06:24:12
  * @Last Modified by: WesFerreira
- * @Last Modified time: 2018-12-28 06:26:17
+ * @Last Modified time: 2018-12-28 16:28:01
  *
  * I find a frog in my room
  */
 
 import { injectable, inject } from "inversify";
-import { IDebuggerService, IDebugger, OGraphic } from "./_Interfaces";
+import { IViewService, IView, OGraphic, IStageService, IStage } from "./_Interfaces";
 
 @injectable()
-export class DebuggerService implements IDebuggerService {
-    private debugDep: IDebugger;
+export class ViewService implements IViewService {
+    public debugDraw: Box2D.Dynamics.b2DebugDraw;
 
-    public renderAll(toRender: OGraphic[]) {
-        this.debugDep.render(toRender);
-    }
-    public addChild(child: OGraphic): OGraphic {
-        return this.debugDep.add(child);
-    }
+    private viewDep: IView;
+
     public addApps(options: PIXI.RendererOptions) {
-        this.debugDep.addBox2App(options);
-        this.debugDep.addPixiApp(options);
+        this.viewDep.addBox2App(options);
+        this.viewDep.addPixiApp(options);
     }
-
-    constructor(@inject("IDebugger") debugDep: IDebugger) {
-        this.debugDep = debugDep;
-        console.log("Service");
+    constructor(@inject("IView") view: IView) {
+        this.viewDep = view;
+        this.debugDraw = this.viewDep.debugDraw;
+        console.log(this.viewDep.debugDraw);
+        console.log("View Injected");
     }
 }
+
+@injectable()
+export class StageService implements IStageService {
+    private stageDep: IStage;
+
+    public addApps(options: PIXI.RendererOptions) {
+        this.stageDep.addApps(options);
+    }
+
+    public addChild(child: OGraphic) {
+        this.stageDep.addChild(child);
+    }
+
+    constructor(@inject("IStage") stage: IStage) {
+        this.stageDep = stage;
+        console.log("Stage Injected");
+    }
+}
+

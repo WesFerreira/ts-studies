@@ -7,20 +7,30 @@
  *  Merry Christmas!!!
  */
 
- ////////////////////////// CLASS
-export interface IDebugger {
+ /////////////////////////////////////////////////////////////////////////////////
+//                                   CLASS                                     //
+/////////////////////////////////////////////////////////////////////////////////
+export interface IView {
+    debugDraw: Box2D.Dynamics.b2DebugDraw;
     addBox2App(options: PIXI.RendererOptions): void;
     addPixiApp(options: PIXI.RendererOptions): void;
-    //
-    add(object: OGraphic): OGraphic;
+}
+export interface IViewService {
+    addApps(options: PIXI.RendererOptions): void;
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+export interface IStage {
+    addChild(object: OGraphic): void;
     render(object: OGraphic[]): void;
+    addApps(options: PIXI.RendererOptions): void;
+}
+export interface IStageService {
 }
 
-export interface IDebuggerService {
-    addChild(child: OGraphic): OGraphic;
-}
-
- ////////////////////////// OBJECT
+ /////////////////////////////////////////////////////////////////////////////////
+//                                   OBJECT                                    //
+/////////////////////////////////////////////////////////////////////////////////
 export interface OGraphic {
     bodyDef: Box2D.Dynamics.b2BodyDef;
     fixtureDef: Box2D.Dynamics.b2FixtureDef ;

@@ -7,26 +7,16 @@
  * ALmost new year...
  */
 
-import "reflect-metadata";
-
 import DepInjector from "./DepInjection";
-import { OGraphic, IDebuggerService } from "./_Interfaces";
-import { DebuggerService } from "./Services";
+import { OGraphic, IViewService, IStageService } from "./_Interfaces";
+import { ViewService, StageService } from "./Services";
 
-export class App implements IDebuggerService {
-    private service: DebuggerService;
-    private toRender: OGraphic[] = new Array();
+export class App implements IStageService {
+    public stage: StageService;
 
     constructor(options: PIXI.ApplicationOptions) {
-        this.service = DepInjector.resolve<DebuggerService>(DebuggerService);
-        this.service.addApps(options);
+        this.stage = DepInjector.resolve<StageService>(StageService);
+        this.stage.addApps(options);
         console.log("App");
     }
-
-    public addChild(child: OGraphic) {
-        this.toRender.push(this.service.addChild(child));
-        this.service.renderAll(this.toRender);
-        return child;
-    }
-
 }

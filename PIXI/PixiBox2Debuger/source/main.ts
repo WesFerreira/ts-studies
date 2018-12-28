@@ -13,5 +13,5 @@ let app = new App({ width: 800, height: 440, antialias: true, backgroundColor: 0
 let g = new Graphics();
 let ball = g.createCircle(50, 50, 20);
 let ball2 = g.createCircle(90, 300, 20);
-app.addChild(ball);
-app.addChild(ball2);
+app.stage.addChild(ball);
+app.stage.addChild(ball2);
