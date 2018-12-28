@@ -15,10 +15,7 @@ export class DebuggerService implements IDebuggerService {
     private debugDep: IDebugger;
 
     public renderAll(toRender: OGraphic[]) {
-        this.debugDep.renderAll(toRender);
-    }
-    public createCircle(): OGraphic {
-        return this.debugDep.createCircle();
+        this.debugDep.render(toRender);
     }
     public addChild(child: OGraphic): OGraphic {
         return this.debugDep.add(child);

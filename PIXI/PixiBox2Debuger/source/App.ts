@@ -23,10 +23,6 @@ export class App implements IDebuggerService {
         console.log("App");
     }
 
-    public createCircle() {
-        return this.service.createCircle();
-    }
-
     public addChild(child: OGraphic) {
         this.toRender.push(this.service.addChild(child));
         this.service.renderAll(this.toRender);

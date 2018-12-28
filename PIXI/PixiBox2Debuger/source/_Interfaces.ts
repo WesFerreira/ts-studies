@@ -13,12 +13,10 @@ export interface IDebugger {
     addPixiApp(options: PIXI.RendererOptions): void;
     //
     add(object: OGraphic): OGraphic;
-    createCircle(): OGraphic;
-    renderAll(object: OGraphic[]): void;
+    render(object: OGraphic[]): void;
 }
 
 export interface IDebuggerService {
-    createCircle(): OGraphic;
     addChild(child: OGraphic): OGraphic;
 }
 

@@ -2,7 +2,7 @@
  * @Author: WesFerreira - https://github.com/WesFerreira
  * @Date: 2018-12-27 04:09:30
  * @Last Modified by: WesFerreira
- * @Last Modified time: 2018-12-28 05:22:49
+ * @Last Modified time: 2018-12-28 07:03:29
  *
  * * ALmost new year...
  */
@@ -19,14 +19,13 @@ export class Debugger implements IDebugger {
     private context: CanvasRenderingContext2D;
     private debugDraw: Box2D.Dynamics.b2DebugDraw;
     private graphics: OGraphic[] = new Array();
-    private toRender = new Array();
 
     constructor() {
         this.world = new Box2D.Dynamics.b2World(this.gravity, true);
         console.log("Debugger");
     }
 
-    //////////////////// VIEWS
+    //////////////////// VIEWS ////////////////////
     public addBox2App(options: PIXI.RendererOptions) {
         this.box2App = document.createElement("canvas");
         this.box2App.width = options.width;
@@ -50,21 +49,7 @@ export class Debugger implements IDebugger {
         document.body.appendChild(this.pixiApp.view);
     }
 
-    //////////////////// GRAPHICS
-    public createCircle() {
-        let bodyDef = new Box2D.Dynamics.b2BodyDef();
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
-        bodyDef.position.x = 769 / 2 / 30;
-        bodyDef.position.y = 50 / 30;
-        let fixtureDef = new Box2D.Dynamics.b2FixtureDef();
-        fixtureDef.density = 1.0;
-        fixtureDef.friction = 0.5;
-        fixtureDef.restitution = 0.3;
-        fixtureDef.shape = new Box2D.Collision.Shapes.b2CircleShape(20 / 30);
-        console.log("createCircle");
-        return <OGraphic>{ bodyDef: bodyDef, fixtureDef: fixtureDef};
-    }
-
+    //////////////////// STAGE ////////////////////
     public add(object: OGraphic): OGraphic {
         let graphic: OGraphic = { bodyDef: object.bodyDef, fixtureDef: object.fixtureDef };
         this.graphics.push(graphic);
@@ -72,17 +57,15 @@ export class Debugger implements IDebugger {
         return graphic;
     }
 
-    public renderAll(toRender: OGraphic[]) {
+    public render(toRender: OGraphic[]): void {
         let _this = this;
 
         toRender.forEach(function (graphic) {
             _this.world.CreateBody(graphic.bodyDef).CreateFixture(graphic.fixtureDef);
-            console.log("render");
         });
         this.setupDebugDraw();
-        console.log("renderAll");
+        console.log("render");
     }
-
     private setupDebugDraw() {
         this.world.SetDebugDraw(this.debugDraw);
         this.world.DrawDebugData();
