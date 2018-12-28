@@ -1,30 +1,36 @@
+/*
+ * @Author: WesFerreira - https://github.com/WesFerreira
+ * @Date: 2018-12-27 04:10:55
+ * @Last Modified by: WesFerreira
+ * @Last Modified time: 2018-12-28 06:21:07
+ *
+ * ALmost new year...
+ */
+
 import "reflect-metadata";
 
-import { Debugger } from "./Debugger";
-import { injectable } from "inversify";
-import container, { DebuggerService } from "./DepInjection";
+import DepInjector from "./DepInjection";
+import { OGraphic, IDebuggerService } from "./_Interfaces";
+import { DebuggerService } from "./Services";
 
-/** Created by WesFerreira 27/12/18
- * ALmost new year...
-*/
-
-export class App {
+export class App implements IDebuggerService {
     private service: DebuggerService;
+    private toRender: OGraphic[] = new Array();
 
     constructor(options: PIXI.ApplicationOptions) {
-        this.service = container.resolve<DebuggerService>(DebuggerService);
+        this.service = DepInjector.resolve<DebuggerService>(DebuggerService);
         this.service.addApps(options);
-        // this.service.setupDebug();
         console.log("App");
     }
 
     public createCircle() {
-        return this.service.create();
+        return this.service.createCircle();
     }
 
-    public addChild() {
-        this.service.render();
-
+    public addChild(child: OGraphic) {
+        this.toRender.push(this.service.addChild(child));
+        this.service.renderAll(this.toRender);
+        return child;
     }
 
 }
