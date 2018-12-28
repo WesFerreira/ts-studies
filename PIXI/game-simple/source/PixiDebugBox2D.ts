@@ -5,7 +5,7 @@ import { App } from "./App";
 import { ContainerOptions } from "./_Interfaces";
 import { injectable } from "inversify";
 
-@injectable()
+// @injectable()
 export class PixiDebugBox2D {
 
     private static instance: PixiDebugBox2D;
@@ -24,7 +24,7 @@ export class PixiDebugBox2D {
         App.getInstance().world.DrawDebugData();
 
     }
-    public constructor() {
+    private constructor() {
         console.log("PixiDebugBox2D");
     }
 }

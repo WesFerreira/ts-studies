@@ -5,7 +5,9 @@ import { DisplayObject } from "./objects/DisplayObject";
 import { App } from "./App";
 import { ContainerOptions } from "./_Interfaces";
 import { PixiDebugBox2D } from "./PixiDebugBox2D";
+import { injectable } from "inversify";
 
+@injectable()
 export class Container {
     public addChild<T extends DisplayObject>(child: T): void {
         App.getInstance().graphics.push({

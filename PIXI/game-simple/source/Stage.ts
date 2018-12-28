@@ -2,11 +2,13 @@
  * Merry Christmas!
 */
 
-import {Container} from "./Container";
+import { Container } from "./Container";
+import { injectable } from "inversify";
 
+@injectable()
 export class Stage extends Container {
-constructor() {
-    super();
-    console.log("Stage");
-}
+    constructor() {
+        super();
+        console.log("Stage");
+    }
 }

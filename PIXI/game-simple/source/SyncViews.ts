@@ -1,22 +1,29 @@
 /** Created by WesFerreira 24/12/18
  * Merry Christmas!
 */
+import "reflect-metadata";
 
 import { Stage } from "./Stage";
-import { RendererOptions } from "./_Interfaces";
+import { RendererOptions, ISyncViews } from "./_Interfaces";
 import { App } from "./App";
+import { injectable } from "inversify";
+import container, { SyncService } from "./DepInjection";
 
+@injectable()
 export class SyncViews {
 
     public debugDraw: Box2D.Dynamics.b2DebugDraw;
-    // public stage = new Stage();
+    public stage;
     public renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
     public debugView: HTMLCanvasElement;
+    public service: SyncService;
 
     private width = 800;
     private height = 600;
 
     constructor(options?: RendererOptions, debugDraw?: boolean) {
+        this.service = container.resolve<SyncService>(SyncService);
+
         if (options) {
             if (options.width) {
                 this.width = options.width;
@@ -29,7 +36,6 @@ export class SyncViews {
                 this.debugDraw = this.setupDebugDraw();
             }
         }
-
         this.addPixiView(options);
 
         console.log("Sync");

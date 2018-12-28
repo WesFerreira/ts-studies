@@ -1,3 +1,7 @@
+import { SyncService } from "./DepInjection";
+import { Stage } from "./Stage";
+import { SyncViews } from "./SyncViews";
+
 /** Created by WesFerreira 25/12/18
  * Merry Christmas!!!
 */
@@ -16,3 +20,17 @@ export interface RendererOptions {
 export interface ContainerOptions {
     draw: () => void;
 }
+
+export interface ISyncViews {
+
+    debugDraw: Box2D.Dynamics.b2DebugDraw;
+    stage: Stage;
+    renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
+    debugView: HTMLCanvasElement;
+    service: SyncService;
+}
+
+export interface IStage {
+    
+}
+

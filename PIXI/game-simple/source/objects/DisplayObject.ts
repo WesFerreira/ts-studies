@@ -9,5 +9,6 @@ export class DisplayObject {
 
     constructor(b2dObj: B2dObj) {
         this.b2dObj = b2dObj;
+        console.log("DisplayOBJ");
     }
 }

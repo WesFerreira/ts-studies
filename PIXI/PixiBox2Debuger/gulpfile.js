@@ -80,7 +80,7 @@ gulp.task('bundle:core', function () {
         }));
 });
 
-gulp.task('core:watch', function () {
+gulp.task('watch:core', function () {
     gulp.watch(paths.scripts.sourceTS, ['bundle:core']);
 
     gulp.watch("dist/core.min.js").on('change', function () {
