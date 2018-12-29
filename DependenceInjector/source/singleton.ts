@@ -1,6 +1,9 @@
 import "reflect-metadata";
-import { Service } from "./DepInjection";
+import { Service, initDependencyC } from "./DepInjection";
 import container from "./DepInjection";
+import { DependencyC, Type } from "./dependences";
+import { IType } from "./_Interfaces";
+
 
 export class Singleton {
     private static instance: Singleton;
@@ -19,6 +22,7 @@ export class Singleton {
     }
 
     private constructor() {
+        initDependencyC({name: "WesFerreira"});
         this.service = container.resolve<Service>(Service);
         console.log("App");
     }

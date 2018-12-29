@@ -8,13 +8,15 @@
  */
 
 import { Container } from "inversify";
-import { IView, IStage} from "./_Interfaces";
+import { IView, IStage, IBox2App} from "./_Interfaces";
 import { View } from "./View";
 import { Stage } from "./Stage";
+import { Box2App } from "./Box2App";
 
 let DepInjector = new Container();
 
 DepInjector.bind<IView>("IView").to(View);
 DepInjector.bind<IStage>("IStage").to(Stage);
+DepInjector.bind<IBox2App>("IBox2App").to(Box2App);
 
 export default DepInjector;

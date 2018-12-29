@@ -10,13 +10,26 @@
  /////////////////////////////////////////////////////////////////////////////////
 //                                   CLASS                                     //
 /////////////////////////////////////////////////////////////////////////////////
+export interface IBox2App {
+    debugDraw: Box2D.Dynamics.b2DebugDraw;
+    create(options: PIXI.RendererOptions): HTMLCanvasElement;
+    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
+}
+export interface IBox2AppService {
+    create(options: PIXI.RendererOptions): HTMLCanvasElement;
+    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
+}
+///////////////////////////////////////////////////////////////////////////////////
+
 export interface IView {
     debugDraw: Box2D.Dynamics.b2DebugDraw;
-    addBox2App(options: PIXI.RendererOptions): void;
     addPixiApp(options: PIXI.RendererOptions): void;
+    createBox2App(options: PIXI.RendererOptions): HTMLCanvasElement;
+    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }
 export interface IViewService {
     addApps(options: PIXI.RendererOptions): void;
+    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +37,7 @@ export interface IStage {
     addChild(object: OGraphic): void;
     render(object: OGraphic[]): void;
     addApps(options: PIXI.RendererOptions): void;
+    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }
 export interface IStageService {
 }
