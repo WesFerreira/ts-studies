@@ -1,4 +1,8 @@
 {
+  "name": "pixi-box2debugger",
+  "version": "0.0.1",
+  "description": "A Box2D debugger for PixiJs.",
+
   "devDependencies": {
     "browserify": "^16.2.2",
     "gulp": "^3.9.1",

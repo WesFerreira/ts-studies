@@ -37,7 +37,7 @@ var paths = {
             'source/typings/**.d.ts/',
             'source/interfaces/interfaces.d.ts'
         ],
-        sourceJS: './source/js/processed/',
+        sourceJS: './js/processed/',
         dist: './dist/'
     },
     libs: [

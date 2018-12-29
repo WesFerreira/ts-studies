@@ -1,8 +1,6 @@
 import "reflect-metadata";
 import { Service, initDependencyC } from "./DepInjection";
 import container from "./DepInjection";
-import { DependencyC, Type } from "./dependences";
-import { IType } from "./_Interfaces";
 
 
 export class Singleton {

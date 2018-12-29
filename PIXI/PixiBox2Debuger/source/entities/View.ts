@@ -6,22 +6,20 @@
  *
  * * ALmost new year...
  */
-import "reflect-metadata";
 
 import { injectable } from "inversify";
-import { OGraphic, IView } from "./_Interfaces";
-import { Box2AppService } from "./Services";
-import DepInjector from "./DepInjection";
+import { Box2AppService } from "../services/Box2AppService";
+import dependencyContainer from "../config/InversionOfControl";
 
 @injectable()
-export class View implements IView {
+export class View {
     public debugDraw: Box2D.Dynamics.b2DebugDraw;
 
     private pixiApp: PIXI.Application;
     private box2App: Box2AppService;
 
     constructor() {
-        this.box2App = DepInjector.resolve<Box2AppService>(Box2AppService);
+        this.box2App = dependencyContainer.resolve<Box2AppService>(Box2AppService);
         this.debugDraw = this.box2App.debugDraw;
         console.log("View");
     }

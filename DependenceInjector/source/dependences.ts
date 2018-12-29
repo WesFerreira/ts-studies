@@ -35,16 +35,18 @@ export class DependencyC implements Dependency {
     private readonly name: string = "dependencyC";
 
     public getName(): string {
-        return this.name + " arg: " + this.arg;
+        return this.name;
     }
     constructor(@inject("IType") arg: IType) {
         this.arg = arg;
-        console.log("DependencyC, arg: " + this.arg.name);
+        console.log("DependencyC");
+        console.log(this.arg);
     }
 }
 
+/*
 @injectable()
 export class Type implements IType {
     public name = "dependencyC";
-}
+} */
 

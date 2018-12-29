@@ -1,4 +1,4 @@
-import { DependencyA, DependencyB, DependencyC, Type } from "./dependences";
+import { DependencyA, DependencyB, DependencyC } from "./dependences";
 import { inject, injectable } from "inversify";
 import { Container } from "inversify";
 import { Dependency, IType } from "./_Interfaces";
@@ -32,7 +32,5 @@ let container = new Container();
 container.bind<DependencyA>(DependencyA).toSelf();
 container.bind<DependencyB>(DependencyB).toSelf();
 container.bind<Dependency>("Dependency").to(DependencyC);
-// container.bind<IType>("IType").toConstantValue({ name: "kkkkkkk" }).whenInjectedInto(DependencyC);
-// container.bind<DependencyC>("DependencyC").toSelf();
 
 export default container;

@@ -6,11 +6,11 @@
  *
  * Working HARD
  */
+
 import { injectable } from "inversify";
-import { IBox2App } from "./_Interfaces";
 
 @injectable()
-export class Box2App implements IBox2App {
+export class Box2App {
     public debugDraw: Box2D.Dynamics.b2DebugDraw;
 
     private canvas: HTMLCanvasElement;

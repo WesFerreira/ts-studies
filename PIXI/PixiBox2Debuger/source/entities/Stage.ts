@@ -7,22 +7,22 @@
  *  To refactor is boring me
  */
 
-import { OGraphic, IStage, IStageService, IViewService } from "./_Interfaces";
 import { injectable } from "inversify";
-import { ViewService } from "./Services";
-import DepInjector from "./DepInjection";
+import { ViewService } from "../services/ViewService";
+import dependencyContainer from "../config/InversionOfControl";
+import { IGraphic } from "../interfaces/IGraphic";
 
 @injectable()
-export class Stage implements IViewService {
+export class Stage {
 
     private world: Box2D.Dynamics.b2World;
     private gravity = new Box2D.Common.Math.b2Vec2(0, 9.8);
-    private toRender: OGraphic[] = new Array();
+    private toRender: IGraphic[] = new Array();
     private view: ViewService;
 
     constructor() {
         this.world = new Box2D.Dynamics.b2World(this.gravity, true);
-        this.view = DepInjector.resolve<ViewService>(ViewService);
+        this.view = dependencyContainer.resolve<ViewService>(ViewService);
         console.log("Stage");
     }
 
@@ -30,8 +30,8 @@ export class Stage implements IViewService {
         return this.view.initDebugDraw();
     }
 
-    public addChild(object: OGraphic) {
-        let graphic: OGraphic = { bodyDef: object.bodyDef, fixtureDef: object.fixtureDef };
+    public addChild(object: IGraphic) {
+        let graphic: IGraphic = { bodyDef: object.bodyDef, fixtureDef: object.fixtureDef };
         this.toRender.push(graphic);
         console.log("add");
         this.render(graphic);

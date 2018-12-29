@@ -6,7 +6,7 @@
  */
 
 import { App } from "./App";
-import { Graphics } from "./Graphics";
+import { Graphics } from "./entities/Graphics";
 
 let app = new App({ width: 800, height: 440, antialias: true, backgroundColor: 0xdddddd });
 

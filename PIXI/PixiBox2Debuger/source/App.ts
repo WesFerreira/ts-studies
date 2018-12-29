@@ -7,15 +7,14 @@
  * ALmost new year...
  */
 
-import DepInjector from "./DepInjection";
-import { OGraphic, IViewService, IStageService } from "./_Interfaces";
-import { ViewService, StageService } from "./Services";
+import dependencyContainer from "./config/InversionOfControl";
+import { StageService } from "./services/StageService";
 
-export class App implements IStageService {
+export class App {
     public stage: StageService;
 
     constructor(options: PIXI.ApplicationOptions) {
-        this.stage = DepInjector.resolve<StageService>(StageService);
+        this.stage = dependencyContainer.resolve<StageService>(StageService);
         this.stage.addApps(options);
         console.log("App");
     }
