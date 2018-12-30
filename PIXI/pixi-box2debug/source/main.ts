@@ -8,7 +8,8 @@
 import { Box2Debug } from "./Box2Debug";
 import { Graphics } from "./entities/Graphics";
 
-let app = new Box2Debug({ width: 800, height: 440, antialias: true, backgroundColor: 0xffffff });
+// tslint:disable:object-literal-sort-keys
+let app = new Box2Debug({ width: 600, height: 440, antialias: true, backgroundColor: 0x4f4f4f}, true);
 
 let g = new Graphics();
 let ball = g.createCircle(50, 50, 20);

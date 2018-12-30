@@ -13,8 +13,8 @@ import { StageService } from "./services/StageService";
 export class Box2Debug {
     public stage: StageService;
 
-    constructor(options: PIXI.RendererOptions) {
-        initBox2App(options);
+    constructor(options: PIXI.RendererOptions, debug?: boolean) {
+        initBox2App(options, debug);
         this.stage = dependencyContainer.resolve<StageService>(StageService);
         console.log("App");
     }
