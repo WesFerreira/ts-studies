@@ -13,15 +13,11 @@ import { IGraphic } from "../interfaces/IGraphic";
 @injectable()
 export class StageService {
     private stageDep: IStage;
-    public addApps(options: PIXI.RendererOptions) {
-        this.stageDep.addApps(options);
-    }
+
     public addChild(child: IGraphic) {
         this.stageDep.addChild(child);
     }
-    constructor(
-        @inject(IDENTFIER.SERVICE.STAGE)
-        stage: IStage) {
+    constructor(@inject(IDENTFIER.SERVICE.STAGE) stage: IStage) {
         this.stageDep = stage;
         console.log("Stage Injected");
     }

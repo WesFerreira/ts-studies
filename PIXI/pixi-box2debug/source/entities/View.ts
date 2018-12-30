@@ -8,32 +8,19 @@
  */
 
 import { injectable } from "inversify";
-import { Box2AppService } from "../services/Box2AppService";
+import { AppService } from "../services/AppService";
 import dependencyContainer from "../config/InversionOfControl";
+import { IView } from "../interfaces/IView";
 
 @injectable()
-export class View {
+export class View implements IView {
     public debugDraw: Box2D.Dynamics.b2DebugDraw;
 
-    private pixiApp: PIXI.Application;
-    private box2App: Box2AppService;
+    private box2App: AppService;
 
     constructor() {
-        this.box2App = dependencyContainer.resolve<Box2AppService>(Box2AppService);
+        this.box2App = dependencyContainer.resolve<AppService>(AppService);
         this.debugDraw = this.box2App.debugDraw;
         console.log("View");
-    }
-
-    public initDebugDraw(): Box2D.Dynamics.b2DebugDraw {
-       return this.box2App.initDebugDraw();
-    }
-    public createBox2App(options: PIXI.RendererOptions): HTMLCanvasElement {
-        return this.box2App.create(options);
-    }
-    public addPixiApp(options: PIXI.RendererOptions) {
-        this.pixiApp = new PIXI.Application(options);
-        this.pixiApp.view.setAttribute("id", "rendererView");
-        document.body.appendChild(this.pixiApp.view);
-        console.log("addPixiApp");
     }
 }

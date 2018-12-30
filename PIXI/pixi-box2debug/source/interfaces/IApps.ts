@@ -7,8 +7,6 @@
  *  Merry Christmas!!!
  */
 
-export interface IBox2App {
+export interface IApps {
     debugDraw: Box2D.Dynamics.b2DebugDraw;
-    create(options: PIXI.RendererOptions): HTMLCanvasElement;
-    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }

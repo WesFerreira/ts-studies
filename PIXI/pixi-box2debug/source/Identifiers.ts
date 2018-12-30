@@ -10,7 +10,7 @@
 // tslint:disable:object-literal-sort-keys
 const IDENTFIER = {
     SERVICE: {
-        BOX2APP: Symbol.for("IBox2App"),
+        APPS: Symbol.for("IApps"),
         VIEW:  Symbol.for("IView"),
         STAGE: Symbol.for("IStage"),
     },

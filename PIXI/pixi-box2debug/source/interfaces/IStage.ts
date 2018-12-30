@@ -10,6 +10,4 @@ import { IGraphic } from "./IGraphic";
 export interface IStage {
     addChild(object: IGraphic): void;
     render(object: IGraphic[]): void;
-    addApps(options: PIXI.RendererOptions): void;
-    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }

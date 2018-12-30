@@ -7,7 +7,4 @@
 
 export interface IView {
     debugDraw: Box2D.Dynamics.b2DebugDraw;
-    addPixiApp(options: PIXI.RendererOptions): void;
-    createBox2App(options: PIXI.RendererOptions): HTMLCanvasElement;
-    initDebugDraw(): Box2D.Dynamics.b2DebugDraw;
 }

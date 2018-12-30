@@ -7,15 +7,15 @@
  * ALmost new year...
  */
 
-import dependencyContainer from "./config/InversionOfControl";
+import dependencyContainer, { initBox2App } from "./config/InversionOfControl";
 import { StageService } from "./services/StageService";
 
-export class App {
+export class Box2Debug {
     public stage: StageService;
 
-    constructor(options: PIXI.ApplicationOptions) {
+    constructor(options: PIXI.RendererOptions) {
+        initBox2App(options);
         this.stage = dependencyContainer.resolve<StageService>(StageService);
-        this.stage.addApps(options);
         console.log("App");
     }
 }

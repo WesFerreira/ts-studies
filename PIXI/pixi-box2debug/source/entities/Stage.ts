@@ -11,9 +11,10 @@ import { injectable } from "inversify";
 import { ViewService } from "../services/ViewService";
 import dependencyContainer from "../config/InversionOfControl";
 import { IGraphic } from "../interfaces/IGraphic";
+import { IStage } from "../interfaces/IStage";
 
 @injectable()
-export class Stage {
+export class Stage implements IStage {
 
     private world: Box2D.Dynamics.b2World;
     private gravity = new Box2D.Common.Math.b2Vec2(0, 9.8);
@@ -26,20 +27,11 @@ export class Stage {
         console.log("Stage");
     }
 
-    public initDebugDraw(): Box2D.Dynamics.b2DebugDraw {
-        return this.view.initDebugDraw();
-    }
-
     public addChild(object: IGraphic) {
         let graphic: IGraphic = { bodyDef: object.bodyDef, fixtureDef: object.fixtureDef };
         this.toRender.push(graphic);
         console.log("add");
         this.render(graphic);
-    }
-
-    public addApps(options: PIXI.RendererOptions): void {
-        this.view.addApps(options);
-        this.initDebugDraw();
     }
 
     public render(graphic): void {
@@ -50,7 +42,6 @@ export class Stage {
     private setupDebugDraw() {
         this.world.SetDebugDraw(this.view.debugDraw);
         this.world.DrawDebugData();
-        console.log(this.view.debugDraw);
         console.log("setupDebugDraw");
     }
 

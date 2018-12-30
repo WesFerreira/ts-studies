@@ -11,16 +11,23 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { IStage } from "../interfaces/IStage";
 import { IView } from "../interfaces/IView";
-import { IBox2App } from "../interfaces/IBox2App";
+import { IApps } from "../interfaces/IApps";
 import { View } from "../entities/View";
 import { Stage } from "../entities/Stage";
-import { Box2App } from "../entities/Box2App";
+import { Apps } from "../entities/Apps";
 import IDENTFIER from "../Identifiers";
 
 let dependencyContainer = new Container();
 
+dependencyContainer.bind<IApps>(IDENTFIER.SERVICE.APPS).to(Apps);
 dependencyContainer.bind<IView>(IDENTFIER.SERVICE.VIEW).to(View);
 dependencyContainer.bind<IStage>(IDENTFIER.SERVICE.STAGE).to(Stage);
-dependencyContainer.bind<IBox2App>(IDENTFIER.SERVICE.BOX2APP).to(Box2App);
+
+export function initBox2App(options: PIXI.RendererOptions, debug?: boolean) {
+    dependencyContainer.bind<PIXI.RendererOptions>("PIXI.RendererOptions")
+        .toConstantValue(options).whenInjectedInto(Apps);
+    dependencyContainer.bind<boolean>("boolean")
+        .toConstantValue(debug).whenInjectedInto(Apps);
+}
 
 export default dependencyContainer;
