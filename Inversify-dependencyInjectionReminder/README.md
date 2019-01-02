@@ -1,2 +1,2 @@
-# pixi-debug-box2d
-W.I.P.
+# Inversify-Dependency InjectionReminder
+It's just a reminder, will not to be finished.
