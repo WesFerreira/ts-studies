@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "box2d", "pixi.js"],
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "module": "commonjs",
@@ -15,6 +15,6 @@
     "removeComments": true,
     "noLib": false,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true  
   }
 }

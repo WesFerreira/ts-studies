@@ -37,11 +37,12 @@ var paths = {
             'source/typings/**.d.ts/',
             'source/interfaces/interfaces.d.ts'
         ],
-        sourceJS: './source/js/processed/',
+        sourceJS: './js/processed/',
         dist: './dist/'
     },
     libs: [
-        'node_modules/inversify/lib/inversify.js'
+        'node_modules/box2dweb/box2d.js',
+        'node_modules/pixi.js/dist/pixi.js'
     ]
 };
 
