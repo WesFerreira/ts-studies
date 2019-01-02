@@ -1,21 +1,18 @@
-import { Box2App } from "./Box2App";
-import { Box2Debug } from "./Box2Debug";
+import { Mon } from "./Mon-chan";
 
 /** Created by WesFerreira 22/12/18 */
 
 // // Shorteners
-let b2Vec2 = Box2D.Common.Math.b2Vec2;
 let b2BodyDef = Box2D.Dynamics.b2BodyDef;
 let b2Body = Box2D.Dynamics.b2Body;
 let b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
 let b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
 let b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
-let b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 
 // let world: Box2D.Dynamics.b2World;
 // 30 pixels on our canvas correspond to 1 meter in the box2d world
 let scale = 30;
-let b2App: Box2App;
+let b2App: Mon.Helpers.Box2App;
 
 function createFloor() {
     // A body definition holds all the data needed to construct a rigid body
@@ -78,7 +75,7 @@ document.body.onload = function () {
     let app = new PIXI.Application({ width: w, height: h, backgroundColor: 0x777777, antialias: true });
     document.body.appendChild(app.view);
     app.view.setAttribute("id", "pixi");
-    b2App = new Box2App({ w: w, h: h, debug: true, gravity: new Box2D.Common.Math.b2Vec2(0, 0)});
+    b2App = new Mon.Helpers.Box2App({ w: w, h: h, debug: true});
 
     let floor = createFloor();
     let circl = createCircleBody();

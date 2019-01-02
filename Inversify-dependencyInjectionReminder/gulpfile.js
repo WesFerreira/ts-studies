@@ -1,9 +1,6 @@
 // Grab our gulp packages
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    cssnano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
-    autoprefixer = require('gulp-autoprefixer'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
     concat = require('gulp-concat'),
@@ -14,7 +11,6 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify');
 
 var tsProject = tsc.createProject('tsconfig.json');
-// TODO: Check if all dependencies are in use
 
 function swallowError(error) {
     // If you want details of the error in the console
@@ -87,35 +83,6 @@ gulp.task('watch:core', function () {
         notify({
             title: 'JS Updates',
             message: 'Oh Yeaaah! You are awesome man.'
-        }).write('');
-    });
-});
-
-/////////////////////////////////////////////////////////////////////////////////
-//                                  SASS                                       //
-/////////////////////////////////////////////////////////////////////////////////
-gulp.task('sass', function () {
-    return gulp.src('./scss/**/*.scss')
-        .pipe(sourcemaps.init()) // Start Sourcemaps
-        .pipe(sass())
-        .on('error', swallowError)
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-        .pipe(gulp.dest('./css'))
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(cssnano())
-        .pipe(sourcemaps.write('.')) // Creates sourcemaps for minified styles
-        .pipe(gulp.dest('./css'));
-});
-gulp.task('sass:watch', function () {
-    gulp.watch('./scss/**/*.scss', ['sass']);
-
-    gulp.watch('./css/app.min.css').on('change', function () {
-        notify({
-            title: 'Css Updates',
-            message: 'Great Desing!.'
         }).write('');
     });
 });
